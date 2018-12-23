@@ -1,4 +1,4 @@
-!.gitkeep
 data/*
+data/!.gitkeep
 build
 nbproject
