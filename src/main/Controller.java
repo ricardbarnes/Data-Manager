@@ -4,6 +4,8 @@
 package main;
 
 import core.commons.CommonController;
+import core.persistence.Persistence;
+import core.persistence.PersistenceManager;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -15,12 +17,18 @@ import views.Menu;
  */
 public class Controller extends CommonController {
     
-    private static Menu mainMenu;
-    private static modules.products.Controller productsController;
+    private final Menu mainMenu;
+    private modules.products.Controller productsController;
+    public Persistence persistence;
 
     public Controller() {
+        persistence = new PersistenceManager().getManager();
         mainMenu = new views.Menu(Lang.Menu.Main.BUTTONS);
         super.addButtonListeners(mainMenu.getButtons());
+    }
+
+    public Persistence getPersistence() {
+        return persistence;
     }
 
     @Override
@@ -53,11 +61,11 @@ public class Controller extends CommonController {
 
     }
 
-    public static Menu getMainMenu() {
+    public Menu getMainMenu() {
         return mainMenu;
     }
 
-    public static modules.products.Controller getProductsController() {
+    public modules.products.Controller getProductsController() {
         return productsController;
     }
 

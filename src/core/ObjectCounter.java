@@ -3,8 +3,9 @@
  */
 package core;
 
-import core.persistence.Persistence;
 import core.persistence.Persistent;
+import main.Main;
+import main.Controller;
 
 /**
  *
@@ -12,13 +13,22 @@ import core.persistence.Persistent;
  */
 public final class ObjectCounter implements Persistent {
 
-    private static final String ID = "counter";
+    // public static final ID = 0; // Don't use
+    public static final int TYPE = 0;
+    public static final int OBJECT_NUMBER = 1;
 
+    public static final int ATTRIBUTES = 2;
+
+    private String id = "counter"; // useless
     private Class type;
-    private Persistent loadedCounter;
     private int objectNumber;
-    private String id;
 
+    /**
+     * Standard constructor.
+     * 
+     * @param pType The object class
+     * @throws ProgramException
+     */
     public ObjectCounter(Class pType) throws ProgramException {
         type = pType;
         count();
@@ -27,13 +37,23 @@ public final class ObjectCounter implements Persistent {
     /**
      * Instanced as example class
      *
-     * @param str
+     * @param str Any string, but recommended to be an autodescriptive one, like
+     * "example".
      */
     public ObjectCounter(String str) {
-        id = ID;
-        objectNumber = 0;
     }
 
+    /**
+     * Special ObjectCounter constructor for JDBC(SQL) data sources
+     * 
+     * @param pType The objec class. A cast will be needed.
+     * @param number The object number.
+     */
+    public ObjectCounter(Class pType, int number) {
+        type = pType;
+        objectNumber = number;
+    }
+    
     public int getObjectNumber() {
         return objectNumber;
     }
@@ -63,19 +83,26 @@ public final class ObjectCounter implements Persistent {
 
     @Override
     public int getAttributeNumber() {
-        return 0;
+        return ObjectCounter.ATTRIBUTES;
     }
 
     @Override
-    public String getAttribute(int index) {
-        return null;
+    public Object getAttribute(int index) {
+        switch (index) {
+            case TYPE:
+                return this.type;
+            case OBJECT_NUMBER:
+                return this.objectNumber;
+            default:
+                return null;
+        }
     }
 
     private void count() throws ProgramException {
-        loadedCounter = Persistence.loadCounter(this);
+        Persistent loadedCounter = Main.getController().getPersistence().loadCounter(this);
         objectNumber = ((ObjectCounter) loadedCounter).getObjectNumber();
         objectNumber++;
-        Persistence.saveCounter(this);
+        Main.getController().getPersistence().saveCounter(this);
     }
 
 }

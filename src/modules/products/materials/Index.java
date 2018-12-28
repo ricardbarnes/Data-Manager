@@ -1,7 +1,7 @@
 /*
  * View structure for the material view classes
  */
-package modules.products.material;
+package modules.products.materials;
 
 /**
  *

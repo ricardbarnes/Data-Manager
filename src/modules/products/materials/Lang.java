@@ -2,7 +2,7 @@
  * en-US
  * Names for buttons
  */
-package modules.products.material;
+package modules.products.materials;
 
 import javax.swing.JOptionPane;
 
@@ -60,7 +60,7 @@ public class Lang {
 
             public static final String[] BUTTONS = {
                 "Delete",
-                "Exit"
+                "Back"
             };
 
             public static final String[] LABELS = {

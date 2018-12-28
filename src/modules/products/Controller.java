@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import views.Menu;
+import main.Main;
 
 /**
  *
@@ -15,8 +16,8 @@ import views.Menu;
  */
 public class Controller extends CommonController {
 
-    private static Menu productsMenu;
-    private static modules.products.material.Controller materialController;
+    private final Menu productsMenu;
+    private modules.products.materials.Controller materialController;
 
     public Controller() {
         productsMenu = new Menu(Lang.Menu.Main.BUTTONS);
@@ -37,11 +38,11 @@ public class Controller extends CommonController {
 
         switch (option) {
             case Index.Main.BACK:
-                main.Controller.getMainMenu().getFrame().setVisible(true);
+                Main.getController().getMainMenu().getFrame().setVisible(true);
                 productsMenu.getFrame().setVisible(false);
                 break;
             case Index.Main.MATERIAL_MANAGEMENT:
-                materialController = new modules.products.material.Controller();
+                materialController = new modules.products.materials.Controller();
                 productsMenu.getFrame().setVisible(false);
                 break;
             case Index.Main.SERVICE_MANAGEMENT:
@@ -51,12 +52,12 @@ public class Controller extends CommonController {
         }
     }
 
-    public static Menu getProductsMenu() {
+    public Menu getProductsMenu() {
         return productsMenu;
     }
 
-    public static modules.products.material.Controller getMaterialController() {
-        return materialController;
-    }
+//    public modules.products.materials.Controller getMaterialController() {
+//        return materialController;
+//    }
 
 }

@@ -1,7 +1,7 @@
 /*
  * Controller for material management
  */
-package modules.products.material;
+package modules.products.materials;
 
 import views.TableModel;
 import core.commons.CommonController;
@@ -14,7 +14,7 @@ import views.Menu;
 import views.Form;
 import views.List;
 import core.ProgramException;
-import core.persistence.Persistence;
+import main.Main;
 
 /**
  *
@@ -113,7 +113,7 @@ public class Controller extends CommonController {
 
         switch (option) {
             case Index.Menu.BACK:
-                modules.products.Controller.getProductsMenu().getFrame().setVisible(true);
+                Main.getController().getProductsController().getProductsMenu().getFrame().setVisible(true);
                 menu.getFrame().setVisible(false);
                 break;
             case Index.Menu.ADD:
@@ -168,7 +168,7 @@ public class Controller extends CommonController {
             case Index.Form.Add.Buttons.SAVE:
                 try {
                     material = new Material(form.serialize());
-                    Persistence.save(material);
+                    Main.getController().getPersistence().save(material);
                     material = null;
                     form.getFrame().setVisible(false);
                     form = null;
@@ -190,7 +190,7 @@ public class Controller extends CommonController {
                 try {
                     int code = Integer.valueOf(form.getTextFields()[0].getText());
                     material = new Material(code);
-                    Persistence.delete(material);
+                    Main.getController().getPersistence().delete(material);
                     material = null;
                     JOptionPane.showMessageDialog(
                             form.getFrame(),
@@ -220,9 +220,9 @@ public class Controller extends CommonController {
                 try {
                     String code = form.getTextFields()[0].getText();
                     material = new Material(Integer.parseInt(code));
-                    material = (Material) Persistence.load(material);
+                    material = (Material) Main.getController().getPersistence().load(material);
                     for (int i = 1; i < form.getTextFields().length; i++) {
-                        form.getTextFields()[i].setText(material.getAttribute(i));
+                        form.getTextFields()[i].setText(String.valueOf(material.getAttribute(i)));
                     }
                     form.toggleEditable();
                     form.getButtons()[0].setEnabled(false);
@@ -237,7 +237,7 @@ public class Controller extends CommonController {
                 if (material != null) { // A material has been successfully loaded
                     try {
                         material.setAttributes(form.serialize());
-                        Persistence.save(material);
+                        Main.getController().getPersistence().save(material);
                         form.getFrame().setVisible(false);
                         form = null;
                     } catch (ProgramException ex) {

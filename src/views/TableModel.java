@@ -3,12 +3,12 @@
  */
 package views;
 
-import core.persistence.Persistence;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import core.ProgramException;
 import core.persistence.Persistent;
+import main.Main;
 
 /**
  *
@@ -21,7 +21,7 @@ public class TableModel extends AbstractTableModel {
 
     public TableModel(Persistent object, String[] columns) throws ProgramException, InstantiationException, IllegalAccessException {
         this.columnNames = columns;
-        List<Persistent> list = Persistence.getAll(object);
+        List<Persistent> list = Main.getController().getPersistence().getAll(object);
         Iterator<Persistent> iterator;
         if (list != null) {
             iterator = list.iterator();             
@@ -29,7 +29,7 @@ public class TableModel extends AbstractTableModel {
             for (int i = 0; i < list.size(); i++) {
                 Persistent currentObject = iterator.next();
                 for (int j = 0; j < currentObject.getAttributeNumber(); j++) {
-                    data[i][j] = currentObject.getAttribute(j);
+                    data[i][j] = String.valueOf(currentObject.getAttribute(j));
                 }
             }
         }

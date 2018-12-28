@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import main.Lang;
-import modules.products.material.Index;
+import modules.products.materials.Index;
 
 /**
  *

@@ -12,6 +12,6 @@ public interface Persistent {
     public void setId(String str);
     public String getId();
     public int getAttributeNumber();
-    public String getAttribute(int index);
+    public Object getAttribute(int index);
     
 }
